@@ -24,7 +24,7 @@ SECRET_KEY = 'v!749myc$3_r3)(f0mor_5b2yz5++_ybauwznh1zn8=mp%(t6m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'users.User'
 ALLOWED_HOSTS = []
 
 

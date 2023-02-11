@@ -10,7 +10,7 @@ class Client(models.Model):
     description = models.CharField(max_length=256, verbose_name='Описание')
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Project(models.Model):
@@ -32,4 +32,4 @@ class Project(models.Model):
         )
 
     def __str__(self):
-        return self.title
+        return self.name
