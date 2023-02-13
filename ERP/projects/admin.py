@@ -2,5 +2,22 @@ from django.contrib import admin
 from . models import Client
 from . models import Project
 
-admin.site.register(Client)
-admin.site.register(Project)
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'address',
+        'email',
+        'description',
+    )
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'date',
+        'status',
+        'description',
+    )

@@ -28,10 +28,16 @@ class Task(models.Model):
         unique=True
         )
     type = models.CharField(
-        max_length=150, choices=CHOICES_TYPE, default='receive'
+        max_length=150,
+        choices=CHOICES_TYPE,
+        default='receive',
+        verbose_name='Тип задачи'
         )
     urgency = models.CharField(
-        max_length=150, choices=CHOICES_URGENCY, default='day'
+        max_length=150,
+        choices=CHOICES_URGENCY,
+        default='day',
+        verbose_name='Срочность'
         )
     project = models.ForeignKey(
         Project,
