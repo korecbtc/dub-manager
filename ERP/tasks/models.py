@@ -46,7 +46,7 @@ class Task(models.Model):
         verbose_name='Проект',
         )
     description = models.CharField(
-        max_length=350, verbose_name='Что нужно сделать (подробно)'
+        max_length=350, verbose_name='Что нужно сделать (подробно)', null=True
         )
     manager = models.ForeignKey(
         User,
@@ -58,6 +58,10 @@ class Task(models.Model):
         max_length=150,
         choices=CHOICES_STATUS, default='not_viewed',
         verbose_name='Статус'
+        )
+
+    comments = models.CharField(
+        max_length=350, verbose_name='Комментарий исполнителя', null=True
         )
 
     def __str__(self):
