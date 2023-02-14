@@ -1,6 +1,5 @@
 from django.db import models
 from projects.models import Project
-from users.models import User
 
 
 class Task(models.Model):
@@ -48,12 +47,7 @@ class Task(models.Model):
     description = models.CharField(
         max_length=350, verbose_name='Что нужно сделать (подробно)', null=True
         )
-    manager = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='managers_tasks',
-        verbose_name='Менеджер',
-    )
+
     status = models.CharField(
         max_length=150,
         choices=CHOICES_STATUS, default='not_viewed',

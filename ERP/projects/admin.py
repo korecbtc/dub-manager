@@ -20,4 +20,9 @@ class ProjectAdmin(admin.ModelAdmin):
         'date',
         'status',
         'description',
+        'manager',
     )
+
+    def get_manager(self, obj):
+        if obj.is_manager:
+            return obj

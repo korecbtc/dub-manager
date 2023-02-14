@@ -10,6 +10,5 @@ class TaskAdmin(admin.ModelAdmin):
         'urgency',
         'project',
         'description',
-        'manager',
         'status',
     )

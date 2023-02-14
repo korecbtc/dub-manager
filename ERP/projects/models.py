@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Client(models.Model):
@@ -30,6 +31,12 @@ class Project(models.Model):
     description = models.CharField(
         max_length=256, verbose_name='Описание проекта'
         )
+    manager = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='managers_projects',
+        verbose_name='Менеджер',
+    )
 
     def __str__(self):
         return self.name

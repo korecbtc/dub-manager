@@ -5,7 +5,6 @@ from rest_framework import serializers
 class TaskSerializer(serializers.ModelSerializer):
     """Сериализатор для исполнителя"""
     project = serializers.StringRelatedField(read_only=True)
-    manager = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Task
@@ -16,7 +15,6 @@ class TaskSerializer(serializers.ModelSerializer):
             'urgency',
             'project',
             'description',
-            'manager',
             'status',
             'comments',
         )
@@ -26,5 +24,4 @@ class TaskSerializer(serializers.ModelSerializer):
             'urgency',
             'project',
             'description',
-            'manager',
         )

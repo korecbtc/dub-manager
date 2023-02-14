@@ -7,14 +7,14 @@ class User(AbstractUser):
         ('manager', 'Менеджер'), ('executer', 'Исполнитель')
     )
     first_name = models.CharField(
-        max_length=150, blank=True, verbose_name='Имя'
+        max_length=150, blank=False, verbose_name='Имя'
     )
     last_name = models.CharField(
-        max_length=150, blank=True, verbose_name='Фамилия'
+        max_length=150, blank=False, verbose_name='Фамилия'
     )
     email = models.EmailField(
         max_length=254,
-        blank=True,
+        blank=False,
         unique=True,
         verbose_name='Адрес электронной почты',
     )
@@ -23,9 +23,14 @@ class User(AbstractUser):
         )
     username = models.CharField(
         max_length=150,
-        null=True,
+        null=False,
         unique=True,
         verbose_name='Имя пользователя'
+    )
+    password = models.CharField(
+        max_length=150,
+        null=False,
+        verbose_name='Пароль'
     )
 
     @property
