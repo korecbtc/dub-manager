@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('djoser.urls')),
     path('api/', include('djoser.urls.authtoken')),
-    # path('api/', include('projects.urls')),
     # path('api/', include('clients.urls')),
-    path('api/', include('tasks.urls'))
+    path('api/', include('tasks.urls')),
+    path('api/', include('projects.urls'))
 ]
