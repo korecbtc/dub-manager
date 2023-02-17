@@ -25,3 +25,24 @@ class TaskSerializer(serializers.ModelSerializer):
             'project',
             'description',
         )
+
+
+class TaskCreateSerializer(serializers.ModelSerializer):
+    """Сериализатор для менеджера"""
+
+    class Meta:
+        model = Task
+        fields = (
+            'id',
+            'what_needed',
+            'type',
+            'urgency',
+            'project',
+            'description',
+            'status',
+            'comments',
+        )
+        read_only_fields = (
+            'status',
+            'comments',
+        )

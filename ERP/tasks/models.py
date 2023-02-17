@@ -55,7 +55,10 @@ class Task(models.Model):
         )
 
     comments = models.CharField(
-        max_length=350, verbose_name='Комментарий исполнителя', null=True
+        max_length=350,
+        verbose_name='Комментарий исполнителя',
+        null=True,
+        blank=True
         )
 
     def __str__(self):

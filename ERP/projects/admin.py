@@ -6,6 +6,7 @@ from . models import Project
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'name',
         'address',
         'email',
@@ -16,6 +17,7 @@ class ClientAdmin(admin.ModelAdmin):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'name',
         'date',
         'status',
