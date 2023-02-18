@@ -19,6 +19,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'comments',
         )
         read_only_fields = (
+            'id',
             'what_needed',
             'type',
             'urgency',
