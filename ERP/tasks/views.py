@@ -2,15 +2,14 @@ from rest_framework import viewsets
 from . models import Task
 from . serializers import TaskSerializer, TaskCreateSerializer
 from django.core.exceptions import PermissionDenied
+from projects.permissions import ManagerOrReadAndPatchOnly
 
 
 class TaskViewset(viewsets.ModelViewSet):
     queryset = Task.objects.all()
+    permission_classes = (ManagerOrReadAndPatchOnly, )
 
     def get_serializer_class(self):
         if self.request.user.is_manager:
             return TaskCreateSerializer
-        if (self.request.user.is_executer and
-                self.request.method in ('GET', 'PATCH')):
-            return TaskSerializer
-        raise PermissionDenied()
+        return TaskSerializer
