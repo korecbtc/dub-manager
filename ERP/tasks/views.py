@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from . models import Task
 from . serializers import TaskSerializer, TaskCreateSerializer
-from django.core.exceptions import PermissionDenied
 from projects.permissions import ManagerOrReadAndPatchOnly
 
 

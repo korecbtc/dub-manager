@@ -7,6 +7,7 @@ class ManagerOrReadAndPatchOnly(permissions.BasePermission):
         return (
                 request.method in ('GET', 'PATCH')
                 or request.user.is_manager
+                or request.user.is_admin
             )
 
 
@@ -16,4 +17,11 @@ class ManagerOrReadOnly(permissions.BasePermission):
         return (
                 request.method == 'GET'
                 or request.user.is_manager
+                or request.user.is_admin
             )
+
+
+class AdminOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_admin

@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     CHOICES = (
-        ('manager', 'Менеджер'), ('executer', 'Исполнитель')
+        ('manager', 'Менеджер'),
+        ('executer', 'Исполнитель'),
+        ('admin', 'Администратор')
     )
     first_name = models.CharField(
         max_length=150, blank=False, verbose_name='Имя'
@@ -40,3 +42,7 @@ class User(AbstractUser):
     @property
     def is_manager(self):
         return self.role == 'manager'
+
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
