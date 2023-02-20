@@ -9,6 +9,6 @@ class TaskViewset(viewsets.ModelViewSet):
     permission_classes = (ManagerOrReadAndPatchOnly, )
 
     def get_serializer_class(self):
-        if self.request.user.is_manager:
+        if self.request.user.is_manager or self.request.user.is_admin:
             return TaskCreateSerializer
         return TaskSerializer

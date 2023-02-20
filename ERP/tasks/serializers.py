@@ -1,10 +1,11 @@
 from . models import Task
+from projects.serializers import ProjectSerializer
 from rest_framework import serializers
 
 
 class TaskSerializer(serializers.ModelSerializer):
     """Сериализатор для исполнителя"""
-    project = serializers.StringRelatedField(read_only=True)
+    project = ProjectSerializer(many=False, read_only=True)
 
     class Meta:
         model = Task
@@ -47,3 +48,10 @@ class TaskCreateSerializer(serializers.ModelSerializer):
             'status',
             'comments',
         )
+
+    def to_representation(self, value):
+        """Отклик на POST запрос обрабатывается другим сериализатором"""
+        return TaskSerializer(
+            value,
+            context={'request': self.context.get('request')}
+        ).data

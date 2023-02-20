@@ -137,6 +137,8 @@ DJOSER = {
     'PERMISSIONS': {
         'user_create': ['projects.permissions.AdminOnly'],
         'user_delete': ['projects.permissions.AdminOnly'],
-        'user_list': ['projects.permissions.AdminOnly'],
+    },
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
     }
 }
