@@ -9,7 +9,7 @@ from tasks.models import Task
 from projects.models import Project, Client
 
 
-class AccountTests(APITestCase):
+class GetTests(APITestCase):
     def setUp(self):
         self.CLIENT_MUST_BE = {
             'id': 1,
@@ -90,24 +90,6 @@ class AccountTests(APITestCase):
             status='in_progress',
             comments='Hi!'
         )
-        self.TASK_MUST_BE = {
-            'id': 1,
-            'what_needed': 'Go',
-            'type': 'send',
-            'urgency': 'now',
-            'project': {
-                'id': 1,
-                'name': 'Best',
-                'client': 'First',
-                'date': '2023-02-18',
-                'status': 'in_progress',
-                'description': 'test project',
-                'manager': 'manager'
-                },
-            'description': 'test task',
-            'status': 'in_progress',
-            'comments': 'Hi!'
-            }
 
     def login_with(self, url, token=None):
         if token is None:
@@ -166,3 +148,15 @@ class AccountTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()), 1)
         self.assertEqual(response.json()[0], self.CLIENT_MUST_BE)
+
+    def test_only_admin_get_users(self):
+        url = '/api/users/'
+        response = self.login_with(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        response = self.login_with(url, self.token_manager.key)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.login_with(url, self.token_executer.key)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.login_with(url, self.token_admin.key)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 3)
