@@ -55,3 +55,27 @@ class TaskCreateSerializer(serializers.ModelSerializer):
             value,
             context={'request': self.context.get('request')}
         ).data
+
+
+class TaskAdminSerializer(serializers.ModelSerializer):
+    """Сериализатор для администратора"""
+
+    class Meta:
+        model = Task
+        fields = (
+            'id',
+            'what_needed',
+            'type',
+            'urgency',
+            'project',
+            'description',
+            'status',
+            'comments',
+        )
+
+    def to_representation(self, value):
+        """Отклик на POST запрос обрабатывается другим сериализатором"""
+        return TaskSerializer(
+            value,
+            context={'request': self.context.get('request')}
+        ).data
