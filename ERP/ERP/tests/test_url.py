@@ -6,7 +6,7 @@ from tasks.models import Task
 from projects.models import Project, Client
 
 
-class GetTests(APITestCase):
+class TasksProjectsClientsTests(APITestCase):
 
     CLIENT_MUST_BE = {
         'id': 1,
@@ -336,6 +336,7 @@ class GetTests(APITestCase):
         self.assertEqual(len(response.json()), 3)
 
     def test_tasks_post_guest(self):
+        '''Проверка недоступности для неавторизированного пользователя'''
         self.client.logout()
         response = self.client.post(
             '/api/tasks/', self.TASK_DATA_POST, format='json'
@@ -343,6 +344,8 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_tasks_post_patch_put_delete_manager(self):
+        '''Менеджер может менять все поля задачи,'''
+        '''кроме статуса и комментария'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_manager.key
             )
@@ -362,6 +365,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_tasks_post_patch_put_delete_executer(self):
+        '''Исполнитель может изменить только 2 поля: статус и комментарии'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_executer.key
             )
@@ -381,6 +385,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_tasks_post_patch_put_delete_admin(self):
+        '''Админ может создавать, изменять, удалять задачи'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_admin.key
             )
@@ -400,6 +405,8 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_projects_post_guest(self):
+        '''Проверка недоступности проектов для'''
+        '''неавторизированного пользователя'''
         self.client.logout()
         response = self.client.post(
             '/api/projects/', self.PROJECT_DATA_POST, format='json'
@@ -407,6 +414,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_projects_post_patch_put_delete_manager(self):
+        '''Менеджер может создавать, изменять, удалять проекты'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_manager.key
             )
@@ -426,6 +434,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_projects_post_patch_put_delete_executer(self):
+        '''Исполнитель не может создавать, изменять, удалять проекты'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_executer.key
             )
@@ -445,6 +454,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_projects_post_patch_put_delete_admin(self):
+        '''Админ может создавать, изменять, удалять проекты'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_admin.key
             )
@@ -464,6 +474,8 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_clients_post_guest(self):
+        '''Проверка недоступности clients для'''
+        '''неавторизированного пользователя'''
         self.client.logout()
         response = self.client.post(
             '/api/clients/', self.CLIENT_DATA_POST, format='json'
@@ -471,6 +483,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_clients_post_patch_put_delete_manager(self):
+        '''Менеджер может создавать, изменять, удалять клиентов'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_manager.key
             )
@@ -490,6 +503,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_clients_post_patch_put_delete_executer(self):
+        '''Исполнитель не может создавать, изменять, удалять клиентов'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_executer.key
             )
@@ -509,6 +523,7 @@ class GetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_clients_post_patch_put_delete_admin(self):
+        '''Админ может создавать, изменять, удалять клиентов'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_admin.key
             )
