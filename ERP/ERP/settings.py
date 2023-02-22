@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'rest_framework.authtoken',
     'djoser',
 ]
@@ -146,3 +147,4 @@ DJOSER = {
     },
     'HIDE_USERS': False,
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
