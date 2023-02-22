@@ -131,16 +131,18 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
 }
 DJOSER = {
     'PERMISSIONS': {
         'user_create': ['projects.permissions.AdminOnly'],
         'user_delete': ['projects.permissions.AdminOnly'],
         'user_list': ['projects.permissions.AdminOnly'],
+        'user': ['projects.permissions.AdminOnly'],
     },
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializer',
+        'user': 'users.serializers.UserSerializer',
     },
     'HIDE_USERS': False,
 }

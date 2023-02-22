@@ -82,3 +82,10 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
             value,
             context={'request': self.context.get('request')}
         ).data
+    
+    def validate_manager(self, data):
+        if not data.is_manager:
+            raise serializers.ValidationError(
+                'Выбранный пользователь не является менеджером'
+                )
+        return data

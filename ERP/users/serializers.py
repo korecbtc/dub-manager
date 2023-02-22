@@ -52,3 +52,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 user.is_active = False
                 user.save(update_fields=["is_active"])
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'role',
+            'username',
+        )

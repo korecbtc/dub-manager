@@ -4,26 +4,11 @@ from rest_framework.authtoken.models import Token
 from users.models import User
 from tasks.models import Task
 from projects.models import Project, Client
+from django.test import override_settings
 
 
-class TasksProjectsClientsTests(APITestCase):
+class TasksProjectsClientsUsersTests(APITestCase):
 
-    CLIENT_MUST_BE = {
-        'id': 1,
-        'name': 'First',
-        'address': 'Moscow',
-        'email': 'first@ya.ru',
-        'description': 'test client'
-        }
-    PROJECT_MUST_BE = {
-        'id': 1,
-        'name': 'Best',
-        'client': 'First',
-        'date': '2023-02-18',
-        'status': 'in_progress',
-        'description': 'test project',
-        'manager': 'manager'
-        }
     TASK_MUST_BE = {
         'id': 1,
         'what_needed': 'Go',
@@ -60,66 +45,6 @@ class TasksProjectsClientsTests(APITestCase):
         'status': 'finished',
         'comments': 'Hi!!!!'
         }
-    PROJECT_DATA_POST = {
-        'name': 'Best',
-        'client': 1,
-        'date': '2023-02-18',
-        'status': 'in_progress',
-        'description': 'test project',
-        'manager': 1
-        }
-    PROJECT_DATA_PATCH = {
-        'name': 'Terminator',
-        'client': 1,
-        'date': '2023-02-19',
-        'status': 'finished',
-        'description': 'test project pathced',
-        'manager': 1
-        }
-    CLIENT_DATA_POST = {
-        'name': 'First',
-        'address': 'Moscow',
-        'email': 'first1@ya.ru',
-        'description': 'test client'
-        }
-    CLIENT_DATA_PATCH = {
-        'name': 'Second',
-        'address': 'MoscowCity',
-        'email': 'first2@ya.ru',
-        'description': 'test client patched'
-        }
-    CLIENT_MUST_BE_POST = {
-        'id': 2,
-        'name': 'First',
-        'address': 'Moscow',
-        'email': 'first1@ya.ru',
-        'description': 'test client'
-        }
-    CLIENT_MUST_BE_PATCHED = {
-        'id': 2,
-        'name': 'Second',
-        'address': 'MoscowCity',
-        'email': 'first2@ya.ru',
-        'description': 'test client patched'
-        }
-    PROJECT_MUST_BE_POST = {
-        'id': 2,
-        'name': 'Best',
-        'client': 'First',
-        'date': '2023-02-18',
-        'status': 'in_progress',
-        'description': 'test project',
-        'manager': 'manager'
-        }
-    PROJECT_MUST_BE_PATCHED = {
-        'id': 2,
-        'name': 'Terminator',
-        'client': 'First',
-        'date': '2023-02-19',
-        'status': 'finished',
-        'description': 'test project pathced',
-        'manager': 'manager'
-    }
     TASK_MUST_BE_POST = {
         'id': 2,
         'what_needed': 'Go-Go',
@@ -209,6 +134,112 @@ class TasksProjectsClientsTests(APITestCase):
         'description': 'test task patched',
         'status': 'finished',
         'comments': 'Hi!!!!'
+        }
+    PROJECT_MUST_BE = {
+        'id': 1,
+        'name': 'Best',
+        'client': 'First',
+        'date': '2023-02-18',
+        'status': 'in_progress',
+        'description': 'test project',
+        'manager': 'manager'
+        }
+    PROJECT_DATA_POST = {
+        'name': 'Best',
+        'client': 1,
+        'date': '2023-02-18',
+        'status': 'in_progress',
+        'description': 'test project',
+        'manager': 1
+        }
+    PROJECT_DATA_PATCH = {
+        'name': 'Terminator',
+        'client': 1,
+        'date': '2023-02-19',
+        'status': 'finished',
+        'description': 'test project pathced',
+        'manager': 1
+        }
+    PROJECT_MUST_BE_POST = {
+        'id': 2,
+        'name': 'Best',
+        'client': 'First',
+        'date': '2023-02-18',
+        'status': 'in_progress',
+        'description': 'test project',
+        'manager': 'manager'
+        }
+    PROJECT_MUST_BE_PATCHED = {
+        'id': 2,
+        'name': 'Terminator',
+        'client': 'First',
+        'date': '2023-02-19',
+        'status': 'finished',
+        'description': 'test project pathced',
+        'manager': 'manager'
+    }
+    CLIENT_MUST_BE = {
+        'id': 1,
+        'name': 'First',
+        'address': 'Moscow',
+        'email': 'first@ya.ru',
+        'description': 'test client'
+        }
+    CLIENT_DATA_POST = {
+        'name': 'First',
+        'address': 'Moscow',
+        'email': 'first1@ya.ru',
+        'description': 'test client'
+        }
+    CLIENT_DATA_PATCH = {
+        'name': 'Second',
+        'address': 'MoscowCity',
+        'email': 'first2@ya.ru',
+        'description': 'test client patched'
+        }
+    CLIENT_MUST_BE_POST = {
+        'id': 2,
+        'name': 'First',
+        'address': 'Moscow',
+        'email': 'first1@ya.ru',
+        'description': 'test client'
+        }
+    CLIENT_MUST_BE_PATCHED = {
+        'id': 2,
+        'name': 'Second',
+        'address': 'MoscowCity',
+        'email': 'first2@ya.ru',
+        'description': 'test client patched'
+        }
+    USER_DATA = {
+        'username': 'newuser',
+        'password': 'pass!!!word',
+        'email': 'newuser@yandex.ru',
+        'first_name': 'Новый',
+        'last_name': 'Юзер',
+        'role': 'manager'
+        }
+    USER_MUST_BE_POST = {
+        'first_name': 'Новый',
+        'last_name': 'Юзер',
+        'email': 'newuser@yandex.ru',
+        'role': 'manager',
+        'username': 'newuser'
+        }
+    USER_DATA_PATCH = {
+        'first_name': 'Патч',
+        'last_name': 'Юзер',
+        'email': 'newuserpatched@yandex.ru',
+        'role': 'executer',
+        'username': 'newuser_patched'
+        }
+    USER_MUST_BE_PATCH = {
+        'id': 1,
+        'first_name': 'Патч',
+        'last_name': 'Юзер',
+        'email': 'newuserpatched@yandex.ru',
+        'role': 'executer',
+        'username': 'newuser_patched'
         }
 
     def setUp(self):
@@ -325,6 +356,7 @@ class TasksProjectsClientsTests(APITestCase):
     def test_only_admin_get_user_list(self):
         '''Проверка что список пользователей доступен только админу'''
         url = '/api/users/'
+        self.client.logout()
         response = self.login_with(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         response = self.login_with(url, self.token_manager.key)
@@ -334,6 +366,74 @@ class TasksProjectsClientsTests(APITestCase):
         response = self.login_with(url, self.token_admin.key)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()), 3)
+
+    def test_guest_cant_create_patch_delete_user(self):
+        '''Неавторизированный пользователь не может создать пользователя'''
+        self.client.logout()
+        response = self.client.post(
+            '/api/users/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_manager_cant_create_patch_delete_user(self):
+        '''Менеджер не может создавать, изменять, удалять пользователей'''
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.token_manager.key
+            )
+        response = self.client.post(
+            '/api/users/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.patch(
+            '/api/users/1/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.put(
+            '/api/users/1/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.delete('/api/users/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_executer_cant_create_patch_delete_user(self):
+        '''Исполнитель не может создавать, изменять, удалять пользователей'''
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.token_executer.key
+            )
+        response = self.client.post(
+            '/api/users/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.patch(
+            '/api/users/1/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.put(
+            '/api/users/1/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.delete('/api/users/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_can_create_patch_delete_user(self):
+        '''Администратор может создавать, изменять, удалять пользователей'''
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.token_admin.key
+            )
+        response = self.client.post(
+            '/api/users/', self.USER_DATA, format='json'
+            )
+        self.assertEqual(response.data, self.USER_MUST_BE_POST)
+        response = self.client.patch(
+            '/api/users/1/', self.USER_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.data, self.USER_MUST_BE_PATCH)
+        response = self.client.put(
+            '/api/users/1/', self.USER_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.data, self.USER_MUST_BE_PATCH)
+        response = self.client.delete('/api/tasks/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_tasks_post_guest(self):
         '''Проверка недоступности для неавторизированного пользователя'''
