@@ -10,6 +10,13 @@ class ManagerOrReadAndPatchOnly(permissions.BasePermission):
             request.user.is_admin
                 ))
 
+    def has_object_permission(self, request, view, obj):
+        return (
+            obj.project.manager == request.user or
+            request.user.is_admin or
+            (request.user.is_executer and request.method in ('GET', 'PATCH'))
+            )
+
 
 class ManagerOrReadOnly(permissions.BasePermission):
 
@@ -19,6 +26,9 @@ class ManagerOrReadOnly(permissions.BasePermission):
             request.user.is_manager or
             request.user.is_admin
                 ))
+
+    def has_object_permission(self, request, view, obj):
+        return obj.manager == request.user or request.user.is_admin
 
 
 class AdminOnly(permissions.BasePermission):
@@ -33,3 +43,11 @@ class ManagerOnly(permissions.BasePermission):
         return request.user.is_authenticated and (
             request.user.is_admin or request.user.is_manager
         )
+
+
+class AdminOrReadOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (
+            request.user.is_admin or request.method == 'GET'
+            )

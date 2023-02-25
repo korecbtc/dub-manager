@@ -250,6 +250,13 @@ class TasksProjectsClientsUsersTests(APITestCase):
             role='manager',
         )
         manager.save()
+        another_manager = User.objects.create(
+            username='another_manager',
+            password='123pass123',
+            email='another_manager@ya.ru',
+            role='manager',
+        )
+        another_manager.save()
         executer = User.objects.create(
             username='executer',
             password='123pass123',
@@ -265,6 +272,7 @@ class TasksProjectsClientsUsersTests(APITestCase):
         )
         admin.save()
         self.token_manager = Token.objects.create(user=manager)
+        self.token_another_manager = Token.objects.create(user=another_manager)
         self.token_executer = Token.objects.create(user=executer)
         self.token_admin = Token.objects.create(user=admin)
         self.clients = Client.objects.create(
@@ -365,7 +373,7 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         response = self.login_with(url, self.token_admin.key)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 3)
+        self.assertEqual(len(response.json()), 4)
 
     def test_guest_cant_create_patch_delete_user(self):
         '''Неавторизированный пользователь не может создать пользователя'''
@@ -444,7 +452,7 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_tasks_post_patch_put_delete_manager(self):
-        '''Менеджер может менять все поля задачи,'''
+        '''Менеджер может менять все поля своей задачи,'''
         '''кроме статуса и комментария'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_manager.key
@@ -463,6 +471,19 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.assertEqual(response.data, self.TASK_MUST_BE_PATCH)
         response = self.client.delete('/api/tasks/2/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.token_another_manager.key
+            )
+        response = self.client.patch(
+            '/api/tasks/1/', self.TASK_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.put(
+            '/api/tasks/1/', self.TASK_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.delete('/api/tasks/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_tasks_post_patch_put_delete_executer(self):
         '''Исполнитель может изменить только 2 поля: статус и комментарии'''
@@ -514,7 +535,7 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_projects_post_patch_put_delete_manager(self):
-        '''Менеджер может создавать, изменять, удалять проекты'''
+        '''Менеджер может создавать, изменять, удалять только свои проекты'''
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_manager.key
             )
@@ -532,6 +553,19 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.assertEqual(response.data, self.PROJECT_MUST_BE_PATCHED)
         response = self.client.delete('/api/projects/2/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.token_another_manager.key
+            )
+        response = self.client.patch(
+            '/api/projects/1/', self.PROJECT_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.put(
+            '/api/projects/1/', self.PROJECT_DATA_PATCH, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.delete('/api/projects/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_projects_post_patch_put_delete_executer(self):
         '''Исполнитель не может создавать, изменять, удалять проекты'''
