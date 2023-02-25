@@ -25,7 +25,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task',
         'status': 'in_progress',
-        'comments': 'Hi!'
+        'comments': 'Hi!',
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_DATA_POST = {
         'what_needed': 'Go-Go',
@@ -34,7 +35,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
         'project': 1,
         'description': 'test task',
         'status': 'in_progress',
-        'comments': 'Hi!'
+        'comments': 'Hi!',
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_DATA_PATCH = {
         'what_needed': 'Go-Go!',
@@ -61,7 +63,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task',
         'status': 'not_viewed',
-        'comments': None
+        'comments': None,
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_MUST_BE_POST_BY_ADMIN = {
         'id': 2,
@@ -79,7 +82,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task',
         'status': 'in_progress',
-        'comments': 'Hi!'
+        'comments': 'Hi!',
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_MUST_BE_PATCH = {
         'id': 2,
@@ -97,7 +101,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task patched',
         'status': 'not_viewed',
-        'comments': None
+        'comments': None,
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_MUST_BE_PATCH_BY_EXECUTER = {
         'id': 1,
@@ -115,7 +120,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task',
         'status': 'finished',
-        'comments': 'Hi!!!!'
+        'comments': 'Hi!!!!',
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     TASK_MUST_BE_PATCH_BY_ADMIN = {
         'id': 2,
@@ -133,7 +139,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             },
         'description': 'test task patched',
         'status': 'finished',
-        'comments': 'Hi!!!!'
+        'comments': 'Hi!!!!',
+        'time_create': '2023-02-25T12:06:41.098204Z'
         }
     PROJECT_MUST_BE = {
         'id': 1,
@@ -296,7 +303,8 @@ class TasksProjectsClientsUsersTests(APITestCase):
             project=self.project,
             description='test task',
             status='in_progress',
-            comments='Hi!'
+            comments='Hi!',
+            time_create='2023-02-25T12:06:41.098204Z'
         )
 
     def login_with(self, url, token=None):

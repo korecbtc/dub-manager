@@ -1,5 +1,6 @@
 from django.db import models
 from projects.models import Project
+from django.utils import timezone
 
 
 class Task(models.Model):
@@ -59,6 +60,10 @@ class Task(models.Model):
         verbose_name='Комментарий исполнителя',
         null=True,
         blank=True
+        )
+
+    time_create = models.DateTimeField(
+        'Время создания задачи', default=timezone.now
         )
 
     def __str__(self):
