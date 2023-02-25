@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -139,11 +140,12 @@ DJOSER = {
         'user_create': ['projects.permissions.AdminOnly'],
         'user_delete': ['projects.permissions.AdminOnly'],
         'user_list': ['projects.permissions.AdminOnly'],
-        'user': ['projects.permissions.AdminOnly'],
+        'user': ['projects.permissions.AdminOrReadOnly'],
     },
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializer',
         'user': 'users.serializers.UserSerializer',
+        'current_user': 'users.serializers.UserSerializer',
     },
     'HIDE_USERS': False,
 }

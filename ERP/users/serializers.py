@@ -66,3 +66,4 @@ class UserSerializer(serializers.ModelSerializer):
             'role',
             'username',
         )
+        ref_name = 'Customuser'

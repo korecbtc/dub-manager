@@ -14,7 +14,9 @@ class ProjectViewset(viewsets.ModelViewSet):
     filterset_fields = ['status', 'client', 'manager']
 
     def get_serializer_class(self):
-        if self.request.user.is_manager or self.request.user.is_admin:
+        if self.request.user.is_authenticated and (
+            self.request.user.is_manager or self.request.user.is_admin
+        ):
             return ProjectCreateSerializer
         return ProjectSerializer
 

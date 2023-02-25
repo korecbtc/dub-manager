@@ -13,8 +13,8 @@ class TaskViewset(viewsets.ModelViewSet):
     filterset_fields = ['status', 'urgency', 'type']
 
     def get_serializer_class(self):
-        if self.request.user.is_manager:
+        if self.request.user.is_authenticated and self.request.user.is_manager:
             return TaskCreateSerializer
-        elif self.request.user.is_admin:
+        elif self.request.user.is_authenticated and self.request.user.is_admin:
             return TaskAdminSerializer
         return TaskSerializer
