@@ -18,6 +18,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'comments',
+            'time_create',
         )
         read_only_fields = (
             'id',
@@ -26,6 +27,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'urgency',
             'project',
             'description',
+            'time_create',
         )
 
 
@@ -43,6 +45,7 @@ class TaskCreateSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'comments',
+            'time_create',
         )
         read_only_fields = (
             'status',
@@ -71,6 +74,7 @@ class TaskAdminSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'comments',
+            'time_create',
         )
 
     def to_representation(self, value):
