@@ -1,11 +1,12 @@
 from rest_framework import viewsets
-from . models import Task
+from . models import Task, Project
 from . serializers import TaskSerializer, TaskCreateSerializer
 from . serializers import TaskAdminSerializer
 from projects.permissions import ManagerOrReadAndPatchOnly
 from django_filters.rest_framework import DjangoFilterBackend
 import datetime
 from django.utils import timezone
+from rest_framework import exceptions
 
 
 class TaskViewset(viewsets.ModelViewSet):
@@ -23,8 +24,15 @@ class TaskViewset(viewsets.ModelViewSet):
         return TaskSerializer
 
     def perform_create(self, serializer):
-        '''Автоматическое удаление старых завершенных задач'''
+        # Автоматическое удаление старых завершенных задач
         Task.objects.filter(
             time_create__lt=self.PERIOD_FOR_DELETE, status='finished'
             ).delete()
-        return super().perform_create(serializer)
+        owners_projects = []
+        # Менеджер может создвать задачи только по своим проектам
+        if self.request.method == 'POST' and self.request.user.is_manager:
+            owners_projects = Project.objects.filter(manager=self.request.user)
+            if serializer.validated_data['project'] not in owners_projects:
+                raise exceptions.PermissionDenied(
+                    detail='You do not have permission to perform this action')
+        serializer.save()

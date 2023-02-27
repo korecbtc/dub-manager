@@ -482,6 +482,10 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_another_manager.key
             )
+        response = self.client.post(
+            '/api/tasks/', self.TASK_DATA_POST, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         response = self.client.patch(
             '/api/tasks/1/', self.TASK_DATA_PATCH, format='json'
             )
