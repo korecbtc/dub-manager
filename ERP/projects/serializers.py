@@ -2,26 +2,6 @@ from rest_framework import serializers
 from . models import Project, Client
 
 
-class ClientSerializer(serializers.ModelSerializer):
-    """Сериализатор для отображения"""
-    class Meta:
-        model = Client
-        fields = (
-            'id',
-            'name',
-            'address',
-            'email',
-            'description',
-        )
-        read_only_fields = (
-            'id',
-            'name',
-            'address',
-            'email',
-            'description',
-        )
-
-
 class ClientCreateSerializer(serializers.ModelSerializer):
     """Сериализатор для менеджера"""
     class Meta:

@@ -4,7 +4,6 @@ from rest_framework.authtoken.models import Token
 from users.models import User
 from tasks.models import Task
 from projects.models import Project, Client
-from django.test import override_settings
 
 
 class TasksProjectsClientsUsersTests(APITestCase):
@@ -482,6 +481,10 @@ class TasksProjectsClientsUsersTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.token_another_manager.key
             )
+        response = self.client.post(
+            '/api/tasks/', self.TASK_DATA_POST, format='json'
+            )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         response = self.client.patch(
             '/api/tasks/1/', self.TASK_DATA_PATCH, format='json'
             )
