@@ -4,7 +4,6 @@ from rest_framework.authtoken.models import Token
 from users.models import User
 from tasks.models import Task
 from projects.models import Project, Client
-from django.test import override_settings
 
 
 class TasksProjectsClientsUsersTests(APITestCase):

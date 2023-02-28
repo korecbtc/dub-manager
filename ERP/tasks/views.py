@@ -7,10 +7,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 import datetime
 from django.utils import timezone
 from rest_framework import exceptions
+# from rest_framework import filters
 
 
 class TaskViewset(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('-time_create')
     permission_classes = (ManagerOrReadAndPatchOnly, )
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['status', 'urgency', 'type']
@@ -28,7 +29,6 @@ class TaskViewset(viewsets.ModelViewSet):
         Task.objects.filter(
             time_create__lt=self.PERIOD_FOR_DELETE, status='finished'
             ).delete()
-        owners_projects = []
         # Менеджер может создвать задачи только по своим проектам
         if self.request.method == 'POST' and self.request.user.is_manager:
             owners_projects = Project.objects.filter(manager=self.request.user)

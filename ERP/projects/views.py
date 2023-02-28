@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from . models import Project, Client
 from . serializers import ProjectSerializer, ProjectCreateSerializer
-from . serializers import ClientCreateSerializer, ClientSerializer
+from . serializers import ClientCreateSerializer
 from . permissions import ManagerOrReadOnly, ManagerOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
