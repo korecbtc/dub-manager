@@ -1,9 +1,10 @@
-from rest_framework import viewsets
-from . models import Project, Client
-from . serializers import ProjectSerializer, ProjectCreateSerializer
-from . serializers import ClientCreateSerializer
-from . permissions import ManagerOrReadOnly, ManagerOnly
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
+
+from .models import Client, Project
+from .permissions import ManagerOnly, ManagerOrReadOnly
+from .serializers import (ClientCreateSerializer, ProjectCreateSerializer,
+                          ProjectSerializer)
 
 
 class ProjectViewset(viewsets.ModelViewSet):

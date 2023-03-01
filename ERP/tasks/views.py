@@ -1,13 +1,13 @@
-from rest_framework import viewsets
-from . models import Task, Project
-from . serializers import TaskSerializer, TaskCreateSerializer
-from . serializers import TaskAdminSerializer
-from projects.permissions import ManagerOrReadAndPatchOnly
-from django_filters.rest_framework import DjangoFilterBackend
 import datetime
+
 from django.utils import timezone
-from rest_framework import exceptions
-# from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from projects.permissions import ManagerOrReadAndPatchOnly
+from rest_framework import exceptions, viewsets
+
+from .models import Project, Task
+from .serializers import (TaskAdminSerializer, TaskCreateSerializer,
+                          TaskSerializer)
 
 
 class TaskViewset(viewsets.ModelViewSet):

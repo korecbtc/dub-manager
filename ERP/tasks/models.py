@@ -1,6 +1,6 @@
 from django.db import models
-from projects.models import Project
 from django.utils import timezone
+from projects.models import Project
 
 
 class Task(models.Model):

@@ -1,7 +1,7 @@
-from django.urls import path, include
-from . views import ProjectViewset, ClientViewset
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
+from .views import ClientViewset, ProjectViewset
 
 router = DefaultRouter()
 router.register('projects', ProjectViewset, basename='projects')

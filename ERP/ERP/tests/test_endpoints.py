@@ -1,9 +1,9 @@
+from projects.models import Client, Project
 from rest_framework import status
-from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
-from users.models import User
+from rest_framework.test import APITestCase
 from tasks.models import Task
-from projects.models import Project, Client
+from users.models import User
 
 
 class TasksProjectsClientsUsersTests(APITestCase):
