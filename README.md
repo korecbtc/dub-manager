@@ -7,6 +7,7 @@
 - Django Rest Framework
 - SQlite
 - Djoser
+- Swagger
 
 ### Техническое задание
 
