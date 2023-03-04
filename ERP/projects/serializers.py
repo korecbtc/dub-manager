@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from . models import Project, Client
+
+from .models import Client, Project
 
 
 class ClientCreateSerializer(serializers.ModelSerializer):
@@ -62,7 +63,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
             value,
             context={'request': self.context.get('request')}
         ).data
-    
+
     def validate_manager(self, data):
         if not data.is_manager:
             raise serializers.ValidationError(
